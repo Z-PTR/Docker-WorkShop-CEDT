@@ -2,13 +2,11 @@ name: CI
 
 # TODO(step-6a): trigger the workflow on push targeting the `main` branch.
 on:
-    push:
-        branches: [main]
-
+  push:
+    branches: [main]
 
 env:
   IMAGE_NAME: workshop-app
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   # After step-6d, your Docker Hub username will live in a secret.
   # For local tagging below we reference ${{ secrets.DOCKERHUB_USERNAME }}.
 
@@ -30,11 +28,11 @@ jobs:
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@0.35.0
         with:
-            scan-type: image
-            image-ref: ${{ env.IMAGE_NAME }}:${{ github.sha }}
-            severity: CRITICAL
-            exit-code: '1'
-            ignore-unfixed: true
+          scan-type: image
+          image-ref: ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          severity: CRITICAL
+          exit-code: '1'
+          ignore-unfixed: true
 
       # log in to Docker Hub using DOCKERHUB_USERNAME and DOCKERHUB_TOKEN secrets.
       - name: Log in to Docker Hub
@@ -47,7 +45,7 @@ jobs:
       - name: Tag and push
         run: |
           FULL=${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME
-          docker tag $IMAGE_NAME:${{ github.sha }} $FULL_IMAGE_NAME:${{ github.sha }}
-          docker tag $IMAGE_NAME:${{ github.sha }} $FULL_IMAGE_NAME:latest
-          docker push $FULL_IMAGE_NAME:${{ github.sha }}
-          docker push $FULL_IMAGE_NAME:latest
+          docker tag $IMAGE_NAME:${{ github.sha }} $FULL:${{ github.sha }}
+          docker tag $IMAGE_NAME:${{ github.sha }} $FULL:latest
+          docker push $FULL:${{ github.sha }}
+          docker push $FULL:latest

@@ -5,6 +5,7 @@ on:
     push:
         branches: [main]
 
+
 env:
   IMAGE_NAME: workshop-app
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true

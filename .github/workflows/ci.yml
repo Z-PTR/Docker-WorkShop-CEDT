@@ -7,6 +7,7 @@ on:
 
 env:
   IMAGE_NAME: workshop-app
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   # After step-6d, your Docker Hub username will live in a secret.
   # For local tagging below we reference ${{ secrets.DOCKERHUB_USERNAME }}.
 
